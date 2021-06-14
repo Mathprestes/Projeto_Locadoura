@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/templates/templates.xhtml">
+
+	<ui:define name="conteudo">
+
+	<ui:define name="metadata">
+	<f:metadata>
+	<f:event listener="#{listFilmeController.carregarCadastro()}" 
+	                 type="preRenderView"></f:event>
+	</f:metadata>
+	</ui:define>
+	
+		<div style="font-size:30px">
+	    <h1 style="text-align:center"> Cadastro de Filmes </h1>
+	    </div>
+	    <br> </br>
+	    
+	    <h:form id="FrmForCad" style="text-align:center;margin-left:27%;margin-top:4%;">
+ 
+	        <h:panelGrid columns="2">
+	            <p:outputLabel value="Nome do Filme: " style="font-size:35px"/>
+	            <p:inputText maxlength="30" size="50" value="#{listFilmeController.listFilme.nomefilme}" 
+	            readonly="#{listFilmeController.acao=='Excluir'}" style="margin-top:20px;margin-bottom:20px"/>
+	            
+	            <p:outputLabel value="Valor: " style="font-size:35px"/>
+	            <p:inputText maxlength="30" size="50" value="#{listFilmeController.listFilme.valor}" 
+	            readonly="#{listFilmeController.acao=='Excluir'}" style="margin-top:20px;margin-bottom:20px" />
+	            
+	            <p:outputLabel value="Duração: " style="font-size:35px"/>
+	            <p:inputText maxlength="10" size="10" value="#{listFilmeController.listFilme.duracao}" 
+	            readonly="#{listFilmeController.acao=='Excluir'}" style="margin-top:20px;margin-bottom:20px" />
+
+				<p:outputLabel value="Categoria: " style="font-size:35px"/>
+				<p:selectOneMenu value="#{listFilmeController.listFilme.tipos}" style="margin-top:20px;margin-bottom:20px">
+					<f:selectItem itemValue="Ação"               itemLabel="Ação" />
+					<f:selectItem itemValue="Aventura"           itemLabel="Aventura" />
+					<f:selectItem itemValue="Ficção Cientifica"  itemLabel="Ficção Cientifica" />
+					<f:selectItem itemValue="Comédia"            itemLabel="Comédia" />
+					<f:selectItem itemValue="Romance"            itemLabel="Romance" />
+					<f:selectItem itemValue="Documentario"       itemLabel="Documentario" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Classificação: " style="font-size:35px"/>
+				<p:selectOneMenu value="#{listFilmeController.listFilme.clas}" style="margin-top:20px;margin-bottom:20px">
+					<f:selectItem itemValue="L"     itemLabel="L" />
+					<f:selectItem itemValue="+10"   itemLabel="+10" />
+					<f:selectItem itemValue="+12"   itemLabel="+12" />
+					<f:selectItem itemValue="+14"   itemLabel="+14" />
+					<f:selectItem itemValue="+16"   itemLabel="+16" />
+					<f:selectItem itemValue="+18"   itemLabel="+18" />
+				</p:selectOneMenu>
+	        </h:panelGrid>
+	        
+	        <!-- /////////////////////////////////////////////////////////////////////////////// -->
+	        
+	        <h:panelGrid columns="4" id="pnFrmForCad" style="margin-left:425px;margin-top:2%;"> 
+	        
+	            <p:commandButton value="Salvar" style="align-itens:center"
+	            actionListener="#{listFilmeController.salvar()}" rendered="#{listFilmeController.acao=='Salvar'}"
+	            update=":msgGlobal :FrmForCad:pnFrmForCad" />
+	            
+	            <p:commandButton value="Excluir" 
+	            actionListener="#{listFilmeController.excluir()}" rendered="#{listFilmeController.acao=='Excluir'}"
+	            update=":msgGlobal :FrmForCad:pnFrmForCad"/>
+
+	            <p:button value="Voltar" outcome="/templates/filmes/filmes.xhtml" style="align-itens:center"/>
+	        </h:panelGrid>
+	    </h:form>
+	    
+	</ui:define>
+</ui:composition>

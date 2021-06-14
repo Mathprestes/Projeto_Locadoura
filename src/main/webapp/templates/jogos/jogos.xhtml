@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/templates/templates.xhtml">
+
+	<ui:define name="conteudo">
+	
+	<p:growl id="msgGloball" />
+	
+		<div style="font-size:30px">
+	    <h1 style="text-align:center"> Locadoura de Jogos </h1>
+	    </div>
+	    <br> </br>
+	    
+	    <h:form id="frmprod">
+	    
+	        <p:panel id="painel">      
+	        
+	        <p:dataTable id="tabela" emptyMessage="Nenhum Registro Encontrado" 
+	        paginator="true" row="10" value="#{jogoController.jogos}" var="cursorProd">
+	        
+	        <f:facet name="header" columns="3" style="text-align:center;margin-left:800px;">
+	        
+	            <p:button value="Cadastrar Jogos" outcome="/templates/jogos/cadJogos.xhtml">
+	                <f:param name="foracao" value="Salvar"/>
+	            </p:button>
+	            
+	            <p:button value="Voltar" outcome="/templates/principal.xhtml" style="width:150px;color:white;background:#E50914"/>
+				
+				<p:commandButton value="Alocar Jogos"
+					actionListener="#{jogoController.novo()}"
+					oncomplete="PF('dialogo').show();"
+					update=":msgGloball :frmCadPro:painelC"/>
+			</f:facet>
+
+				<p:column headerText="Usuario"
+					filterBy="#{cursorProd.usuario.nome}"
+					sortBy="#{cursorProd.usuario.nome}">
+					<h:outputText value="#{cursorProd.usuario.nome}" />
+				</p:column>
+				
+				<p:column headerText="CPF"
+					filterBy="#{cursorProd.usuario.cpf}"
+					sortBy="#{cursorProd.usuario.cpf}">
+					<h:outputText value="#{cursorProd.usuario.cpf}" />
+				</p:column>
+
+				<p:column headerText="Nome do Jogo"
+					filterBy="#{cursorProd.listjogo.nomejogo}"
+					sortBy="#{cursorProd.listjogo.nomejogo}">
+					<h:outputText value="#{cursorProd.listjogo.nomejogo}" />
+				</p:column>
+				
+				<p:column headerText="Categoria" sortBy="#{cursorProd.listjogo.tipos}">
+					<h:outputText value="#{cursorProd.listjogo.tipos}" />
+				</p:column>
+				
+				<p:column headerText="Valor" sortBy="#{cursorProd.listjogo.valor}">
+					<h:outputText value="#{cursorProd.listjogo.valor}" />
+				</p:column>
+
+				<p:outputLabel value="Data Inicial:" />
+				<p:calendar locale="pt_BR" yearNavigator="true"
+						pattern="dd/MM/yyyy" monthNavigator="true"
+						value="#{jogoController.jogo.date1}" />
+						
+				<p:outputLabel value="Data Final:" />
+				<p:calendar locale="pt_BR" yearNavigator="true"
+						pattern="dd/MM/yyyy" monthNavigator="true"
+						value="#{jogoController.jogo.date2}" />
+				
+				<p:column headerText="Metodo de Pagamento">
+					<h:outputText value="#{cursorProd.metodo}"/>
+				</p:column> 
+	            
+				<p:column headerText="Opções">
+					<p:commandButton icon="ui-icon-trash"
+						actionListener="#{jogoController.excluir}"
+						update=":msgGloball :frmprod:tabela">
+						<p:confirm header="Confirma exclusão"
+							message="Deseja realmente excluir?" icon="ui-icon-alert" />
+						<f:attribute name="produtoSelecionado" value="#{cursorProd}" />
+					</p:commandButton>
+				</p:column>
+	        </p:dataTable>
+	        
+	        <p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+	        
+	      </p:panel>
+	    </h:form> 
+	    
+	    <p:dialog header="Alocação de Jogos" draggable="false"
+		resizable="false" closable="false" widgetVar="dialogo">
+		
+		<h:form id="frmCadPro">
+		
+			<h:panelGrid id="painelC" columns="2">
+			
+			<p:outputLabel value="Nome do Usuario: " />
+				<p:selectOneMenu value="#{jogoController.jogo.usuario}"
+					converter="omnifaces.SelectItemsConverter">
+					<f:selectItem itemValue="" itemLabel="Selecione um Usuario" />
+
+					<f:selectItems value="#{jogoController.usuarios}" var="cursorfor"
+						itemLabel="#{cursorfor.nome}" itemValue="#{cursorfor}" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Nome do Jogo: " />
+				<p:selectOneMenu value="#{jogoController.jogo.listjogo}"
+					converter="omnifaces.SelectItemsConverter">
+					<f:selectItem itemValue="" itemLabel="Selecione um Jogo" />
+
+					<f:selectItems value="#{jogoController.listJogos}" var="cursorfor"
+						itemLabel="#{cursorfor.nomejogo}" itemValue="#{cursorfor}" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Data Inicial: " />
+				<p:inputText maxlength="10" value="#{jogoController.jogo.date1}"/>
+				
+				<p:outputLabel value="Data Final: " />
+				<p:inputText maxlength="10" value="#{jogoController.jogo.date2}"/>
+
+				<p:outputLabel value="Metodo de Pagamento: " />
+				<p:selectOneMenu value="#{jogoController.jogo.metodo}">
+					<f:selectItem itemValue="Cartão de Credito"  itemLabel="Cartão de Credito" />
+					<f:selectItem itemValue="Cartão de Debito"   itemLabel="Cartão de Debito" />
+					<f:selectItem itemValue="Dinheiro"           itemLabel="Dinheiro" />
+					<f:selectItem itemValue="Paypal"             itemLabel="Paypal" />
+					<f:selectItem itemValue="Pix"                itemLabel="Pix" />
+				</p:selectOneMenu>
+			
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{jogoController.salvar()}"
+						update=":msgGloball :frmCadPro:painelC :frmprod:tabela" />
+					<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
+				
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+
+    </ui:define>
+</ui:composition>

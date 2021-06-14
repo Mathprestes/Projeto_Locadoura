@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/templates/templates.xhtml">
+
+	<ui:define name="conteudo">
+	
+	    <div style="font-size:30px">
+	    <h1 style="text-align:center"> Usuário </h1>
+	    </div>
+	    <br> </br>
+	    
+	    <h:panelGrid columns="2" style="text-align:center;margin-left:800px;">
+	       <p:button value="Voltar" outcome="/templates/principal.xhtml" style="width:250px;height:60px"/>
+	      
+	       <p:button value="Cadastrar Usuario" outcome="/templates/user/cadUsuario.xhtml" style="width:250px;height:60px">
+	       <f:param name="foracao" value="Salvar"/>
+	       </p:button>
+	    </h:panelGrid>
+	    
+	    <br> </br>
+	    
+	    <h:form>
+
+	        <p:dataTable value="#{usuarioController.usuarios}" var="cursorFor" 
+	        emptyMessage="Nenhum registro encontrado" paginator="true" rows="10">
+
+				<p:column headerText="Nome" filterBy="#{cursorFor.nome}">
+					<h:outputText value="#{cursorFor.nome}"/>
+				</p:column>
+
+				<p:column headerText="CPF" filterBy="#{cursorFor.cpf}">
+					<h:outputText value="#{cursorFor.cpf}"/>
+				</p:column>
+
+				<p:column headerText="Telefone" filterBy="#{cursorFor.telefone}">
+					<h:outputText value="#{cursorFor.telefone}"/>
+				</p:column>
+				
+				<p:column headerText="Email" filterBy="#{cursorFor.email}">
+					<h:outputText value="#{cursorFor.email}"/>
+				</p:column>
+				
+				<p:column headerText="Opçoes"> 
+	                <p:button icon="ui-icon-pencil" outcome="/templates/user/cadUsuario.xhtml">
+	                     <f:param name="forcod" value="#{cursorFor.codigo}"/>
+	                     <f:param name="foracao" value="Editar"/>
+	                </p:button>
+                    <p:button icon="ui-icon-trash" outcome="/templates/user/cadUsuario.xhtml"> 
+                         <f:param name="forcod" value="#{cursorFor.codigo}"/>
+                         <f:param name="foracao" value="Excluir"/>
+                    </p:button>
+	           </p:column>
+			</p:dataTable>
+	        
+	    </h:form>
+	</ui:define>
+</ui:composition>

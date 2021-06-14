@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/templates/templates.xhtml">
+
+	<ui:define name="conteudo">
+
+	<ui:define name="metadata">
+	<f:metadata>
+	<f:event listener="#{listJogoController.carregarCadastro()}" 
+	                 type="preRenderView"></f:event>
+	</f:metadata>
+	</ui:define>
+	
+		<div style="font-size:30px">
+	    <h1 style="text-align:center"> Cadastro de Jogos </h1>
+	    </div>
+	    <br> </br>
+	    
+	    <h:form id="FrmForCad" style="text-align:center;margin-left: 29%;margin-top: 5%;">
+ 
+	        <h:panelGrid columns="2">
+	            <p:outputLabel value="Nome do Jogo: " style="font-size:35px"/>
+	            <p:inputText maxlength="30" size="50" value="#{listJogoController.listJogo.nomejogo}" 
+	            readonly="#{listJogoController.acao=='Excluir'}" style="margin-top:20px;margin-bottom:20px" />
+	            
+				<p:outputLabel value="Categoria: " style="font-size:35px"/>
+				<p:selectOneMenu value="#{listJogoController.listJogo.tipos}" style="margin-top:20px;margin-bottom:20px">
+					<f:selectItem itemValue="Esporte"       itemLabel="Esporte" />
+					<f:selectItem itemValue="Corrida"       itemLabel="Corrida" />
+					<f:selectItem itemValue="Aventura"      itemLabel="Aventura" />
+					<f:selectItem itemValue="Ação"          itemLabel="Ação" />
+					<f:selectItem itemValue="FPS"           itemLabel="FPS" />
+					<f:selectItem itemValue="RPG"           itemLabel="RPG" />
+				</p:selectOneMenu>
+	            
+	            <p:outputLabel value="Valor: " style="font-size:35px"/>
+	            <p:inputText maxlength="30" size="50" value="#{listJogoController.listJogo.valor}" 
+	            readonly="#{listJogoController.acao=='Excluir'}" style="margin-top:20px;margin-bottom:20px" />
+	        </h:panelGrid>
+	        
+	        <h:panelGrid columns="4" id="pnFrmForCad" style="margin-left:28%;margin-top: 5%;"> 
+	        
+	            <p:commandButton value="Salvar" style="align-itens:center"
+	            actionListener="#{listJogoController.salvar()}" rendered="#{listJogoController.acao=='Salvar'}"
+	            update=":msgGlobal :FrmForCad:pnFrmForCad" />
+	            
+	            <p:commandButton value="Excluir" 
+	            actionListener="#{listJogoController.excluir()}" rendered="#{listJogoController.acao=='Excluir'}"
+	            update=":msgGlobal :FrmForCad:pnFrmForCad"/>
+
+	            <p:button value="Voltar" outcome="/templates/jogos/jogos.xhtml" style="align-itens:center"/>
+	        </h:panelGrid>
+	    </h:form>
+	    
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/templates/templates.xhtml">
+	
+	<ui:define name="metadata">
+	<f:metadata>
+	<f:event listener="#{usuarioController.carregarCadastro()}" 
+	                 type="preRenderView"></f:event>
+	</f:metadata>
+	</ui:define>
+
+	<ui:define name="conteudo">
+	
+		<div style="font-size:30px">
+	    <h1 style="text-align:center"> Cadastro de Usuario </h1>
+	    </div>
+	    <br> </br>
+
+	    <h:form id="FrmForCad" style="text-align:center;margin-left: 25%;margin-top: 5%;">
+ 
+	        <h:panelGrid columns="2">
+	            
+	            <p:outputLabel value="Nome do Usuario: " style="font-size:35px"/>
+	            <p:inputText maxlength="30" size="50" value="#{usuarioController.usuario.nome}" 
+	            readonly="#{usuarioController.acao=='Excluir'}" style="margin-top:20px;margin-bottom:20px" />
+
+	            <p:outputLabel value="CPF: " style="font-size:35px"/>
+	            <p:inputText maxlength="30" size="50" value="#{usuarioController.usuario.cpf}"
+	            readonly="#{usuarioController.acao=='Excluir'}" style="margin-top:20px;margin-bottom:20px"/>
+	            
+	            <p:outputLabel value="Telefone: " style="font-size:35px"/>
+	            <p:inputText maxlength="30" size="50" value="#{usuarioController.usuario.telefone}" 
+	            readonly="#{usuarioController.acao=='Excluir'}" style="margin-top:20px;margin-bottom:20px"/>
+	            
+	            <p:outputLabel value="Email: " style="font-size:35px"/>
+	            <p:inputText maxlength="30" size="50" value="#{usuarioController.usuario.email}"
+	            readonly="#{usuarioController.acao=='Excluir'}" style="margin-top:20px;margin-bottom:20px"/>
+	        </h:panelGrid>
+	        
+	        <h:panelGrid columns="4" id="pnFrmForCad" style="margin-left:30%;margin-top: 5%;"> 
+	        
+	            <p:button value="Voltar" outcome="/templates/user/usuario.xhtml" style="align-itens:center"/>
+	        
+	            <p:commandButton value="Salvar" style="align-itens:center"
+	            actionListener="#{usuarioController.salvar()}" rendered="#{usuarioController.acao=='Salvar'}"
+	            update=":msgGlobal :FrmForCad:pnFrmForCad" />
+	            
+	            <p:commandButton value="Editar" 
+	            actionListener="#{usuarioController.editar()}" rendered="#{usuarioController.acao=='Editar'}"
+	            update=":msgGlobal :FrmForCad:pnFrmForCad"/>
+	            
+	            <p:commandButton value="Excluir" 
+	            actionListener="#{usuarioController.excluir()}" rendered="#{usuarioController.acao=='Excluir'}"
+	            update=":msgGlobal :FrmForCad:pnFrmForCad"/>
+	        </h:panelGrid>
+	    </h:form>
+
+	</ui:define>
+</ui:composition>

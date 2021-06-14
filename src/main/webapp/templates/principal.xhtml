@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/templates/templates.xhtml">
+
+	<ui:define name="conteudo">
+	
+	    <div style="font-size:30px">
+	        <h1 style="text-align:center;color:#E50914"> Seja bem Vindo a Locadora </h1>
+	    </div>
+
+        <h:panelGrid columns="3" style="text-align:center;margin-top:15%;margin-left:690px;">
+	       <p:button value="Alugar Filmes"   style="width:250px;height:60px;color:white;background:#000000" outcome="/templates/filmes/filmes.xhtml"/>
+	       <p:button value="Ver Usuarios"    style="width:250px;height:60px;color:white;background:#E50914" outcome="/templates/user/usuario.xhtml"/>
+	       <p:button value="Alugar Jogos"    style="width:250px;height:60px;color:white;background:#000000" outcome="/templates/jogos/jogos.xhtml"/>
+	    </h:panelGrid>
+
+	</ui:define>
+</ui:composition>
